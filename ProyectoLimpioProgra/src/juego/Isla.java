@@ -1,0 +1,56 @@
+package juego;
+
+import java.awt.Color;
+import java.awt.Image;
+import entorno.Entorno;
+
+public class Isla {
+    public double x, y;
+    public int ancho, alto;
+    private Image imagen;  // Imagen para la isla
+
+    public Isla(double x, double y, int ancho, int alto, Image imagen) {
+        this.x = x;
+        this.y = y;
+        this.ancho = ancho;
+        this.alto = alto;
+        this.imagen = imagen;  
+    }
+
+    public void dibujarse(Entorno entorno) {
+        if (imagen != null) {           
+            entorno.dibujarImagen(imagen, this.x, this.y, 0);
+        } else {
+            // Dibuja un rectángulo si no hay imagen
+            entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.yellow);
+        }
+    }
+
+    public double getX() {
+        return this.x;
+    }
+
+    public double getY() {
+        return this.y;
+    }
+
+    public double getAncho() {
+        return ancho;
+    }
+
+    public double getAlto() {
+        return alto;
+    }
+
+    public boolean colisionaConTortuga(double tortugaX, double tortugaY, double tortugaAncho, double tortugaAlto) {
+        // Verifica si la tortuga está sobre la isla 
+        return tortugaY + tortugaAlto / 2 >= this.y - this.alto / 2 && tortugaY - tortugaAlto / 2 <= this.y + this.alto / 2 &&
+               tortugaX + tortugaAncho / 2 >= this.x - this.ancho / 2 && tortugaX - tortugaAncho / 2 <= this.x + this.ancho / 2;
+    }
+
+    public boolean colisionaConGnomo(double gnomoX, double gnomoY, double gnomoAncho, double gnomoAlto) {
+        // Verifica si el Gnomo está sobre la isla
+        return gnomoY + gnomoAlto / 2 >= this.y - this.alto / 2 && gnomoY - gnomoAlto / 2 <= this.y + this.alto / 2 &&
+               gnomoX + gnomoAncho / 2 >= this.x - this.ancho / 2 && gnomoX - gnomoAncho / 2 <= this.x + this.ancho / 2;
+    }
+}
